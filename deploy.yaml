@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs
+  template: 
+    metadata: # Dictionary
+      name: nodejs-pod
+      labels: # Dictionary 
+        app: nodejs       
+  spec:
+  containers: # List
+    - name: nodejs-container
+      image: nodeapi/nodejs:v1
+      ports:
+        - containerPort: 5000
+      tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Exists"
+          effect: "NoSchedule"
