@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: learn-k8s-deployment
+  namespace: k8s-nodeapi
+
+spec:
+  replicas: 2
+  selector:
+    labels:
+    app: learn-k8s
+  template:
+    metadata:
+      labels:
+        app: learn-k8s
+    spec:
+      containers:
+        - name: learn-k8s
+          image: k8sblog.azurecr.io/azurek8s:1.0.0
+          ports: 
+          - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "150Mi"
+            limits:
+              cpu: "200m"
+              memory: "250Mi"
+  imagePullSecrets:
+    - name: acr-secret
